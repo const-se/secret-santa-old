@@ -1,0 +1,94 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+parameters:
+    locale: ru
+
+framework:
+    secret: '%secret%'
+    router:
+        resource: '%kernel.project_dir%/app/config/routing.yml'
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation:
+        enable_annotations: true
+    templating:
+        engines:
+            - twig
+    default_locale: '%locale%'
+    trusted_hosts: ~
+    session:
+        handler_id: session.handler.native_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+    fragments: ~
+    http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
+
+twig:
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+
+assetic:
+    debug: '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~
+        scssphp:
+            formatter: Leafo\ScssPhp\Formatter\Compressed
+    bundles:
+        - AppBundle
+        - FOSJsRoutingBundle
+    assets:
+        css_layout:
+            inputs:
+                - bundles/app/css/bootstrap.min.css
+                - bundles/app/css/font-awesome.min.css
+                - bundles/app/css/izitoast.min.css
+            filters:
+                - scssphp
+                - cssrewrite
+        js_layout:
+            inputs:
+                - '@AppBundle/Resources/public/js/jquery.min.js'
+                - '@FOSJsRoutingBundle/Resources/public/js/router.js'
+                - '@AppBundle/Resources/public/js/angular.min.js'
+                - '@AppBundle/Resources/public/js/popper.min.js'
+                - '@AppBundle/Resources/public/js/bootstrap.min.js'
+                - '@AppBundle/Resources/public/js/izitoast.min.js'
+doctrine:
+    dbal:
+        driver: pdo_mysql
+        host: '%database_host%'
+        port: '%database_port%'
+        dbname: '%database_name%'
+        user: '%database_user%'
+        password: '%database_password%'
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_general_ci
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+swiftmailer:
+    transport: '%mailer_transport%'
+    host: '%mailer_host%'
+    username: '%mailer_user%'
+    password: '%mailer_password%'
+    port: '%mailer_port%'
+    encryption: '%mailer_encryption%'
+    auth_mode: '%mailer_auth_mode%'
+    spool:
+        type: file
+        path: '%kernel.project_dir%/var/spool'
+
+ewz_recaptcha:
+    public_key: '%recaptcha_public_key%'
+    private_key: '%recaptcha_private_key%'

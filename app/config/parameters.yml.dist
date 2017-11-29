@@ -1,0 +1,19 @@
+parameters:
+    database_host: 127.0.0.1
+    database_name: symfony
+    database_password: ~
+    database_port: ~
+    database_user: root
+
+    mailer_auth_mode: ~
+    mailer_encryption: ~
+    mailer_host: 127.0.0.1
+    mailer_password: ~
+    mailer_port: ~
+    mailer_transport: smtp
+    mailer_user: ~
+
+    recaptcha_public_key: ''
+    recaptcha_private_key: ''
+
+    secret: ThisTokenIsNotSoSecretChangeIt

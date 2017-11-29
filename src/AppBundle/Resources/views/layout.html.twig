@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+        <title>{% block title %}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="robots" content="noindex, nofollow"/>
+        <meta name="copyright" content="Constantine Seleznyoff <const.seoff@gmail.com>"/>
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/>
+        <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}"/>
+        {% block stylesheets %}
+            {% stylesheets '@css_layout' output = 'css/layout.css' %}
+                <link rel="stylesheet" href="{{ asset_url }}"/>
+            {% endstylesheets %}
+        {% endblock %}
+    </head>
+    <body data-ng-app="santa">
+        {% block body %}{% endblock %}
+        {% block javascripts %}
+            {% javascripts '@js_layout' output = 'js/layout.js' %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+    </body>
+</html>
