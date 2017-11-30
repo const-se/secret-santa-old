@@ -12,9 +12,9 @@
 {% block body %}
     <div class="container-fluid container_registration">
         <div class="card mt-xl-5 mt-lg-4 mt-md-3 mt-sm-2 mt-1 mx-auto text-center registration-form">
-            <div class="card-body">
+            <div class="card-body p-xl-5 p-lg-4 p-md-3 p-sm-2 p-1">
                 <h4 class="card-title">Добро пожаловать!</h4>
-                <p class="card-text text-success">Бла-бла-бла</p>
+                <p class="card-text text-success">Здесь будет поясняющий текст...</p>
                 {{ form_start(registration_form) }}
                     <div class="form-group">
                         {{ form_label(registration_form.firstname) }}
@@ -33,6 +33,26 @@
                     </div>
                     <button type="submit" class="btn btn-block btn-lg btn-success">Отправить</button>
                 {{ form_end(registration_form) }}
+            </div>
+            <div class="card-footer text-muted">
+                <small>
+                    Отправляя свои данные, Вы принимаете условия нашей
+                    <a href="#" data-toggle="modal" data-target="#privacy-modal">политики конфиденциальности</a>
+                </small>
+            </div>
+        </div>
+    </div>
+    <div id="privacy-modal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Политика конфиденциальности</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">Здесь будет политика конфиденциальности...</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Понятно</button>
+                </div>
             </div>
         </div>
     </div>

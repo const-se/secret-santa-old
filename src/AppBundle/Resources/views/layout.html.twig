@@ -13,12 +13,18 @@
             {% stylesheets '@css_layout' output = 'css/layout.css' %}
                 <link rel="stylesheet" href="{{ asset_url }}"/>
             {% endstylesheets %}
+            {% stylesheets '@css_common' output = 'css/common.css' %}
+                <link rel="stylesheet" href="{{ asset_url }}"/>
+            {% endstylesheets %}
         {% endblock %}
     </head>
     <body ng-app="santa">
         {% block body %}{% endblock %}
         {% block javascripts %}
             {% javascripts '@js_layout' output = 'js/layout.js' %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+            {% javascripts '@js_common' output = 'js/common.js' %}
                 <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
         {% endblock %}

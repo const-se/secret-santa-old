@@ -48,6 +48,8 @@ assetic:
             inputs:
                 - bundles/app/css/bootstrap.min.css
                 - bundles/app/css/font-awesome.min.css
+        css_common:
+            inputs:
                 - bundles/app/css/common.scss
             filters:
                 - scssphp
@@ -59,6 +61,8 @@ assetic:
                 - '@AppBundle/Resources/public/js/angular.min.js'
                 - '@AppBundle/Resources/public/js/popper.min.js'
                 - '@AppBundle/Resources/public/js/bootstrap.min.js'
+        js_common:
+            inputs:
                 - '@AppBundle/Resources/public/js/common.js'
 doctrine:
     dbal:
