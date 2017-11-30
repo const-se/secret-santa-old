@@ -1,10 +1,32 @@
 security:
+    encoders:
+        AppBundle\Entity\User: bcrypt
     providers:
-        in_memory:
-            memory: ~
+        admin:
+            entity:
+                class: AppBundle:User
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        admin:
+            pattern: ^/admin/
+            provider: admin
+            anonymous: ~
+            form_login:
+                check_path: admin_login_check
+                login_path: admin_login
+                username_parameter: username
+                password_parameter: password
+                remember_me: true
+            remember_me:
+                secret: '%secret%'
+                lifetime: 604800
+                path: /
+                remember_me_parameter: rememberMe
+            logout:
+                path: admin_logout
         main:
+            pattern: ^/
             anonymous: ~

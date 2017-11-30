@@ -1,28 +1,39 @@
 {% extends 'AppBundle::layout.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Добро пожаловать!{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
+    {% stylesheets 'bundles/app/css/general.scss' output = 'css/general.css' filter = 'scssphp, cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="d-inline-block mx-auto align-middle">
-            {{ form_start(registration_form) }}
-                <div class="form-group">
-                    {{ form_label(registration_form.firstname) }}
-                    {{ form_widget(registration_form.firstname, {'attr': {'class': 'form-control form-control-lg'}}) }}
-                </div>
-                <div class="form-group">
-                    {{ form_label(registration_form.lastname) }}
-                    {{ form_widget(registration_form.lastname, {'attr': {'class': 'form-control form-control-lg'}}) }}
-                </div>
-                <div class="form-group">
-                    {{ form_label(registration_form.email) }}
-                    {{ form_widget(registration_form.email, {'attr': {'class': 'form-control form-control-lg'}}) }}
-                </div>
-            {{ form_end(registration_form) }}
+    <div class="container-fluid container_registration">
+        <div class="card mt-xl-5 mt-lg-4 mt-md-3 mt-sm-2 mt-1 mx-auto text-center registration-form">
+            <div class="card-body">
+                <h4 class="card-title">Добро пожаловать!</h4>
+                <p class="card-text text-success">Бла-бла-бла</p>
+                {{ form_start(registration_form) }}
+                    <div class="form-group">
+                        {{ form_label(registration_form.firstname) }}
+                        {{ form_widget(registration_form.firstname, {'attr': {'class': 'form-control form-control-lg'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(registration_form.lastname) }}
+                        {{ form_widget(registration_form.lastname, {'attr': {'class': 'form-control form-control-lg'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(registration_form.email) }}
+                        {{ form_widget(registration_form.email, {'attr': {'class': 'form-control form-control-lg'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_widget(registration_form.recaptcha) }}
+                    </div>
+                    <button type="submit" class="btn btn-block btn-lg btn-success">Отправить</button>
+                {{ form_end(registration_form) }}
+            </div>
         </div>
     </div>
 {% endblock %}

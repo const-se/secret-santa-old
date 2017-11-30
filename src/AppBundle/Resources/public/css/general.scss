@@ -1,0 +1,29 @@
+.container_registration {
+  .registration-form {
+    width: 600px;
+  }
+}
+
+@media (max-width: 530px) {
+  .container_registration {
+    .registration-form {
+      width: 100%;
+    }
+  }
+}
+
+@media (min-width: 531px) {
+  .container_registration {
+    .registration-form {
+      width: 500px;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .container_registration {
+    .registration-form {
+      width: 600px;
+    }
+  }
+}

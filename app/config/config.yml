@@ -48,7 +48,7 @@ assetic:
             inputs:
                 - bundles/app/css/bootstrap.min.css
                 - bundles/app/css/font-awesome.min.css
-                - bundles/app/css/izitoast.min.css
+                - bundles/app/css/common.scss
             filters:
                 - scssphp
                 - cssrewrite
@@ -59,7 +59,7 @@ assetic:
                 - '@AppBundle/Resources/public/js/angular.min.js'
                 - '@AppBundle/Resources/public/js/popper.min.js'
                 - '@AppBundle/Resources/public/js/bootstrap.min.js'
-                - '@AppBundle/Resources/public/js/izitoast.min.js'
+                - '@AppBundle/Resources/public/js/common.js'
 doctrine:
     dbal:
         driver: pdo_mysql

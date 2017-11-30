@@ -31,9 +31,12 @@ class RegistrationType extends AbstractEntityType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('firstname', TextType::class, ['label' => 'Имя'])
-            ->add('lastname', TextType::class, ['label' => 'Фамилия'])
-            ->add('email', EmailType::class, ['label' => 'Адрес электронной почты']);
+            ->add('firstname', TextType::class, ['label' => 'Имя', 'attr' => ['placeholder' => 'Твое имя']])
+            ->add('lastname', TextType::class, ['label' => 'Фамилия', 'attr' => ['placeholder' => 'Твоя фамилия']])
+            ->add('email', EmailType::class, [
+                'label' => 'Адрес электронной почты',
+                'attr' => ['placeholder' => 'Твой e-mail'],
+            ]);
 
         if ($options['recaptcha']) {
             $builder->add('recaptcha', EWZRecaptchaType::class, [
