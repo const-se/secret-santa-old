@@ -35,5 +35,9 @@ angular.module('santa').controller('IndexController', function ($scope, $interva
         }
     }, 1000);
 });
-angular.module('santa').controller('RegistrationController', function ($scope) {
+angular.module('santa').controller('RegistrationController', function ($scope, $http) {
+    $scope.participant = participant;
+    $scope.registration_form_submit = function () {
+        $http.post(Routing.generate('api_validate_registration'), {})
+    }
 });

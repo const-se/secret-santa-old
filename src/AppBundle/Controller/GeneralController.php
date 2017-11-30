@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class GeneralController extends Controller
 {
@@ -26,10 +27,11 @@ class GeneralController extends Controller
     /**
      * @Config\Route("/registration", name = "general_registration")
      * @param Request $request
+     * @param SerializerInterface $serializer
      * @return RedirectResponse|Response
      * @throws OptimisticLockException
      */
-    public function registration(Request $request): Response
+    public function registration(Request $request, SerializerInterface $serializer): Response
     {
         $participant = new Participant();
         $registrationForm = $this
@@ -48,6 +50,7 @@ class GeneralController extends Controller
 
         return $this->render('AppBundle:General:registration.html.twig', [
             'registration_form' => $registrationForm->createView(),
+            'participant' => $serializer->serialize($participant, 'json', ['groups' => ['registration']]),
         ]);
     }
 

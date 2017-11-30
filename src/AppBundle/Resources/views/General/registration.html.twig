@@ -18,18 +18,18 @@
                     Если фраза &laquo;Даша &mdash; радость наша&raquo; тебе о чём-то говорит, значит, ты попал по адресу!<br/>
                     Скорее заполняй форму и жди подробности!
                 </p>
-                {{ form_start(registration_form) }}
+                {{ form_start(registration_form, {'attr': {'ng-submit': 'registration_form_submit()'}}) }}
                     <div class="form-group">
                         {{ form_label(registration_form.firstname) }}
-                        {{ form_widget(registration_form.firstname, {'attr': {'class': 'form-control form-control-lg'}}) }}
+                        {{ form_widget(registration_form.firstname, {'attr': {'class': 'form-control form-control-lg', 'ng-model': 'participant.firstname'}}) }}
                     </div>
                     <div class="form-group">
                         {{ form_label(registration_form.lastname) }}
-                        {{ form_widget(registration_form.lastname, {'attr': {'class': 'form-control form-control-lg'}}) }}
+                        {{ form_widget(registration_form.lastname, {'attr': {'class': 'form-control form-control-lg', 'ng-model': 'participant.lastname'}}) }}
                     </div>
                     <div class="form-group">
                         {{ form_label(registration_form.email) }}
-                        {{ form_widget(registration_form.email, {'attr': {'class': 'form-control form-control-lg'}}) }}
+                        {{ form_widget(registration_form.email, {'attr': {'class': 'form-control form-control-lg', 'ng-model': 'participant.email'}}) }}
                     </div>
                     <div class="form-group">
                         {{ form_widget(registration_form.recaptcha) }}
@@ -174,7 +174,7 @@
                     </ol>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Понятно</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Ясно, понятно</button>
                 </div>
             </div>
         </div>
@@ -186,4 +186,7 @@
     {% javascripts '@AppBundle/Resources/public/js/general.js' output = 'js/general.js' %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    <script>
+        var participant = {{ participant|raw }};
+    </script>
 {% endblock %}

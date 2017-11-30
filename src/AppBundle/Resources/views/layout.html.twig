@@ -24,6 +24,7 @@
             {% javascripts '@js_layout' output = 'js/layout.js' %}
                 <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
+            <script src="{{ path('fos_js_routing_js', {callback: 'fos.Router.setData'}) }}"></script>
             {% javascripts '@js_common' output = 'js/common.js' %}
                 <script src="{{ asset_url }}"></script>
             {% endjavascripts %}

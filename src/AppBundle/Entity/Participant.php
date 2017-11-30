@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -17,6 +18,7 @@ class Participant
      * @ORM\Column(name = "email", type = "string", length = 100, unique = true)
      * @Assert\NotBlank(groups = {"registration"}, message = "Адрес электронной почты не может быть пустым")
      * @Assert\Email(groups = {"registration"}, message = "Некорректный адрес электронной почты")
+     * @Groups({"registration"})
      * @var string
      */
     protected $email = '';
@@ -25,6 +27,7 @@ class Participant
      * @ORM\Column(name = "firstname", type = "string")
      * @Assert\NotBlank(groups = {"registration"}, message = "Имя не может быть пустым")
      * @Assert\Regex(groups = {"registration"}, pattern = "~^[А-Яа-яЁё]{2,50}$~iu", message = "Некорректное имя")
+     * @Groups({"registration"})
      * @var string
      */
     protected $firstname = '';
@@ -33,6 +36,7 @@ class Participant
      * @ORM\Column(name = "lastname", type = "string")
      * @Assert\NotBlank(groups = {"registration"}, message = "Фамилия не может быть пустой")
      * @Assert\Regex(groups = {"registration"}, pattern = "~^[А-Яа-яЁё]{2,50}$~iu", message = "Некорректная фамилия")
+     * @Groups({"registration"})
      * @var string
      */
     protected $lastname = '';
@@ -40,7 +44,7 @@ class Participant
     /**
      * @ORM\ManyToOne(targetEntity = "Participant")
      * @ORM\JoinColumn(name = "id_recipient", referencedColumnName = "id", nullable = true)
-     * @var Participant
+     * @var Participant|null
      */
     protected $recipient;
 
@@ -69,9 +73,9 @@ class Participant
     }
 
     /**
-     * @return Participant
+     * @return Participant|null
      */
-    public function getRecipient(): Participant
+    public function getRecipient(): ?Participant
     {
         return $this->recipient;
     }
@@ -113,7 +117,7 @@ class Participant
      * @param Participant|null $recipient
      * @return Participant|null
      */
-    public function setRecipient(?Participant $recipient): ?Participant
+    public function setRecipient(?Participant $recipient): Participant
     {
         $this->recipient = $recipient;
 
