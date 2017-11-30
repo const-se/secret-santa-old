@@ -10,10 +10,14 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        main:
+            pattern: ^/
+            anonymous: ~
         admin:
             pattern: ^/admin/
             provider: admin
             anonymous: ~
+            security: true
             form_login:
                 check_path: admin_login_check
                 login_path: admin_login
@@ -27,6 +31,3 @@ security:
                 remember_me_parameter: rememberMe
             logout:
                 path: admin_logout
-        main:
-            pattern: ^/
-            anonymous: ~

@@ -15,6 +15,15 @@ use Symfony\Component\HttpFoundation\Response;
 class GeneralController extends Controller
 {
     /**
+     * @Config\Route("/", name = "general_index")
+     * @return Response
+     */
+    public function index()
+    {
+        return $this->render('AppBundle:General:index.html.twig');
+    }
+
+    /**
      * @Config\Route("/registration", name = "general_registration")
      * @param Request $request
      * @return RedirectResponse|Response

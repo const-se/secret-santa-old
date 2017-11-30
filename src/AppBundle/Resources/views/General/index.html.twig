@@ -1,0 +1,66 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block title %}2018{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/app/css/general.scss' output = 'css/general.css' filter = 'scssphp, cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid text-center container_index" ng-controller="IndexController" ng-cloak>
+        <div class="card mt-xl-5 mt-lg-4 mt-md-3 mt-sm-2 mt-1 mx-auto text-center new-year-estimate">
+            <div class="card-body py-xl-5 py-lg-4 py-md-3 py-sm-2 py-1">
+                <h1 class="font-weight-bold text-success new-year-h1">До Нового 2018 года</h1>
+                <h2 class="font-weight-bold text-success new-year-h2">осталось</h2>
+                <div class="row">
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <h1 class="display-2 text-nowrap">
+                            <span class="badge badge-danger">[[ days1 ]]</span>
+                            <span class="badge badge-danger">[[ days2 ]]</span>
+                        </h1>
+                        <p class="new-year-h2 text-danger">дней</p>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <h1 class="display-2 text-nowrap">
+                            <span class="badge badge-danger">[[ hours1 ]]</span>
+                            <span class="badge badge-danger">[[ hours2 ]]</span>
+                        </h1>
+                        <p class="new-year-h2 text-danger">часов</p>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <h1 class="display-2 text-nowrap">
+                            <span class="badge badge-danger">[[ minutes1 ]]</span>
+                            <span class="badge badge-danger">[[ minutes2 ]]</span>
+                        </h1>
+                        <p class="new-year-h2 text-danger">минут</p>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <h1 class="display-2 text-nowrap">
+                            <span class="badge badge-danger">[[ seconds1 ]]</span>
+                            <span class="badge badge-danger">[[ seconds2 ]]</span>
+                        </h1>
+                        <p class="new-year-h2 text-danger">секунд</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="progress m-3">
+                    <div
+                        class="progress-bar progress-bar-striped progress-bar-animated bg-warning js-progress"
+                        style="width:[[ progress ]]%"
+                    ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts '@AppBundle/Resources/public/js/general.js' output = 'js/general.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

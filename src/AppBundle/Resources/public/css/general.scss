@@ -1,3 +1,21 @@
+.container_index {
+  .new-year-estimate {
+    max-width: 1200px;
+  }
+
+  .new-year-h1 {
+    font-size: 6rem;
+  }
+
+  .new-year-h2 {
+    font-size: 2.5rem;
+  }
+
+  .progress-bar {
+    transition: width 0.25s ease-in-out;
+  }
+}
+
 .container_registration {
   .registration-form {
     width: 600px;
@@ -5,6 +23,16 @@
 }
 
 @media (max-width: 575px) {
+  .container_index {
+    .new-year-h1 {
+      font-size: 2.5rem;
+    }
+
+    .new-year-h2 {
+      font-size: 1.5rem;
+    }
+  }
+
   .container_registration {
     .registration-form {
       width: 100%;
@@ -13,6 +41,16 @@
 }
 
 @media (min-width: 576px) {
+  .container_index {
+    .new-year-h1 {
+      font-size: 2.5rem;
+    }
+
+    .new-year-h2 {
+      font-size: 1.75rem;
+    }
+  }
+
   .container_registration {
     .registration-form {
       width: 500px;
@@ -21,9 +59,36 @@
 }
 
 @media (min-width: 992px) {
+  .container_index {
+    .new-year-h1 {
+      font-size: 4.5rem;
+    }
+
+    .new-year-h2 {
+      font-size: 2rem;
+    }
+  }
+
   .container_registration {
     .registration-form {
       width: 600px;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .container_index {
+    .new-year-h1 {
+      font-size: 6rem;
+    }
+
+    .new-year-h2 {
+      font-size: 2.5rem;
+    }
+  }
+
+  .container_index {
+    .new-year-estimate {
     }
   }
 }
