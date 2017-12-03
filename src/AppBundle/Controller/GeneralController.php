@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,7 +47,15 @@ class GeneralController extends Controller
             $entityManager->persist($participant);
             $entityManager->flush();
 
-            // TODO notification
+            $mail = (new Swift_Message())
+                ->setFrom('santaclaus@santa.const-se.ru')
+                ->setTo('const.seoff@gmail.com')
+                ->setSubject('Новая регистрация')
+                ->setBody(
+                    $this->renderView('AppBundle:Mail:registration.html.twig', ['participant' => $participant]),
+                    'text/html'
+                );
+            $this->get('mailer')->send($mail);
 
             return $this->redirectToRoute('general_welcome', ['participant' => $participant->getId()]);
         }
@@ -64,6 +73,6 @@ class GeneralController extends Controller
      */
     public function welcome(Participant $participant): Response
     {
-        return $this->render('AppBundle:General:welcome.html.twig');
+        return $this->render('AppBundle:General:welcome.html.twig', ['participant' => $participant]);
     }
 }
