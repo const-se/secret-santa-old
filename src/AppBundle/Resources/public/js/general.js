@@ -10,8 +10,8 @@ angular.module('santa').controller('IndexController', function ($scope, $interva
     $scope.seconds2 = 0;
     $scope.progress = 0;
 
-    var newYearTime = + new Date('2018-01-01 00:00:00');
-    var fromTime = + new Date('2017-12-01 00:00:00');
+    var newYearTime = + new Date('2018/01/01 00:00:00');
+    var fromTime = + new Date('2017/12/01 00:00:00');
     var timer = $interval(function () {
         var estimate = Math.floor((newYearTime - new Date()) / 1000);
 
