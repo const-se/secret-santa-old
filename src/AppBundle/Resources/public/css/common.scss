@@ -1,3 +1,17 @@
+@mixin font($family, $style, $weight, $filename) {
+  @font-face {
+    font-family: $family;
+    font-style: $style;
+    font-weight: $weight;
+    src: url('../fonts/#{$filename}.ttf') format('truetype');
+  }
+}
+
+@include font('Open Sans', normal, bold, 'OpenSans-Bold');
+@include font('Open Sans', italic, bold, 'OpenSans-BoldItalic');
+@include font('Open Sans', italic, normal, 'OpenSans-Italic');
+@include font('Open Sans', normal, normal, 'OpenSans-Regular');
+
 html,
 body {
   min-height: 100%;
@@ -5,6 +19,7 @@ body {
 
 body {
   background: url('../images/background.jpg') center center;
+  font-family: 'Open Sans', sans-serif;
 }
 
 @keyframes button-loading {
@@ -40,4 +55,8 @@ body {
       animation-delay: 0s;
     }
   }
+}
+
+.ng-cloak {
+  display: none !important;
 }

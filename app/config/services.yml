@@ -11,3 +11,6 @@ services:
         public: true
         tags:
             - controller.service_arguments
+    AppBundle\EventListener\KernelRequestListener:
+        tags:
+            - { name: 'kernel.event_listener', event: kernel.request }

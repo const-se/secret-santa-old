@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class ApiController extends Controller
 {
     /**
-     * @Config\Route("/validation/registration", name = "api_validate_registration")
+     * @Config\Route("/validation/registration", name = "api_validate_registration", options = {"expose": true})
      * @param Request $request
      * @return JsonResponse
      * @throws BadRequestHttpException
@@ -26,8 +26,10 @@ class ApiController extends Controller
     public function validateRegistration(Request $request): JsonResponse
     {
         $form = $this
-            ->createForm(RegistrationType::class, new Participant(), ['recaptcha' => false])
-            ->handleRequest($request);
+            ->createForm(
+                RegistrationType::class, new Participant(),
+                ['recaptcha' => false, 'csrf_protection' => false]
+            )->handleRequest($request);
 
         return $this->renderValidationResponse($form);
     }

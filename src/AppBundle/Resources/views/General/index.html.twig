@@ -10,12 +10,12 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container-fluid text-center container_index" ng-controller="IndexController" ng-cloak>
+    <div class="container-fluid text-center container_index" ng-controller="IndexController">
         <div class="card mt-xl-5 mt-lg-4 mt-md-3 mt-sm-2 mt-1 mx-auto text-center new-year-estimate">
-            <div class="card-body py-xl-5 py-lg-4 py-md-3 py-sm-2 py-1">
+            <div class="card-body py-xl-5 py-lg-4 py-md-3 py-sm-2 py-1 ng-cloak" ng-show="beforeNewYear" ng-cloak>
                 <h1 class="font-weight-bold text-success new-year-h1">До Нового 2018 года</h1>
                 <h2 class="font-weight-bold text-success new-year-h2">осталось</h2>
-                <div class="row">
+                <div class="row ng-cloak" ng-cloak>
                     <div class="col-xl-3 col-sm-6 col-12">
                         <h1 class="display-2 text-nowrap">
                             <span class="badge badge-danger">[[ days1 ]]</span>
@@ -46,7 +46,10 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
+            <div class="card-body py-xl-5 py-lg-4 py-md-3 py-sm-2 py-1 ng-cloak" ng-show="!beforeNewYear" ng-cloak>
+                <h1 class="font-weight-bold text-success new-year-h1">С Новым 2018 годом!</h1>
+            </div>
+            <div class="card-footer ng-cloak" ng-show="beforeNewYear" ng-cloak>
                 <div class="progress m-3">
                     <div
                         class="progress-bar progress-bar-striped progress-bar-animated bg-warning js-progress"

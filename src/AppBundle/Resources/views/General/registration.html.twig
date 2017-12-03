@@ -16,25 +16,81 @@
                 <h4 class="card-title">Добро пожаловать!</h4>
                 <p class="card-text text-success">
                     Если фраза &laquo;Даша &mdash; радость наша&raquo; тебе о чём-то говорит, значит, ты попал по адресу!<br/>
+                    В этот Новый год мы играем в
+                    <a href="#" data-toggle="modal" data-target="#rules-modal">Тайного Санту</a>, и для этого потребуется твоя электронная почта.<br/>
                     Скорее заполняй форму и жди подробности!
                 </p>
-                {{ form_start(registration_form, {'attr': {'ng-submit': 'registration_form_submit()'}}) }}
+                {% form_theme registration_form 'EWZRecaptchaBundle:Form:ewz_recaptcha_widget.html.twig' %}
+                {{ form_start(registration_form, {
+                    'name': 'registrationForm',
+                    'attr': {'novalidate': 'novalidate', 'class': 'js-registration-form'}
+                }) }}
                     <div class="form-group">
                         {{ form_label(registration_form.firstname) }}
-                        {{ form_widget(registration_form.firstname, {'attr': {'class': 'form-control form-control-lg', 'ng-model': 'participant.firstname'}}) }}
+                        {{ form_widget(registration_form.firstname, {'attr': {
+                            'class': 'form-control form-control-lg',
+                            'ng-model': 'participant.firstname',
+                            'ng-class': '{\'is-invalid\': registrationForm.firstname.$invalid && !registrationForm.firstname.$pristine}'
+                        }}) }}
+                        <div class="invalid-feedback">
+                            <ul class="text-left">
+                                <li ng-repeat="error in participantErrors.firstname.errors">[[ error ]]</li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="form-group">
                         {{ form_label(registration_form.lastname) }}
-                        {{ form_widget(registration_form.lastname, {'attr': {'class': 'form-control form-control-lg', 'ng-model': 'participant.lastname'}}) }}
+                        {{ form_widget(registration_form.lastname, {'attr': {
+                            'class': 'form-control form-control-lg',
+                            'ng-model': 'participant.lastname',
+                            'ng-class': '{\'is-invalid\': registrationForm.lastname.$invalid && !registrationForm.lastname.$pristine}'
+                        }}) }}
+                        <div class="invalid-feedback">
+                            <ul class="text-left">
+                                <li ng-repeat="error in participantErrors.lastname.errors">[[ error ]]</li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="form-group">
                         {{ form_label(registration_form.email) }}
-                        {{ form_widget(registration_form.email, {'attr': {'class': 'form-control form-control-lg', 'ng-model': 'participant.email'}}) }}
+                        {{ form_widget(registration_form.email, {'attr': {
+                            'class': 'form-control form-control-lg',
+                            'ng-model': 'participant.email',
+                            'ng-class': '{\'is-invalid\': registrationForm.email.$invalid && !registrationForm.email.$pristine}'
+                        }}) }}
+                        <div class="invalid-feedback">
+                            <ul class="text-left">
+                                <li ng-repeat="error in participantErrors.email.errors">[[ error ]]</li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="form-group">
                         {{ form_widget(registration_form.recaptcha) }}
+                        {% if registration_form.recaptcha.vars.errors|length %}
+                            <div class="form-text text-danger small">
+                                <ul class="text-left">
+                                    {% for error in registration_form.recaptcha.vars.errors %}
+                                        <li>{{ error.message|e }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
                     </div>
-                    <button type="submit" class="btn btn-block btn-lg btn-success">Отправить</button>
+                    <button
+                        class="btn btn-block btn-lg btn-success js-registration-form-submit"
+                        ng-click="submitRegistrationForm()"
+                        ng-disabled="loading"
+                    >
+                        <span class="ng-cloak" ng-show="!loading" ng-cloak>
+                            <span class="fa fa-paper-plane"></span>
+                            Отправить
+                        </span>
+                        <div class="button-loading ng-cloak" ng-show="loading" ng-cloak>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
                 {{ form_end(registration_form) }}
             </div>
             <div class="card-footer text-muted">
@@ -42,6 +98,34 @@
                     Отправляя свои данные, ты принимаешь условия нашей
                     <a href="#" data-toggle="modal" data-target="#privacy-modal">политики конфиденциальности</a>
                 </small>
+            </div>
+        </div>
+    </div>
+    <div id="rules-modal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Тайный Санта</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    Попробуй себя в роли &laquo;Тайного Санты&raquo;!
+                    Когда зарегистрируются все участники игры, каждому на указанную почту придёт письмо с указанием человека,
+                    которому до Нового года нужно будет приготовить подарок. Прелесть игры в том, что никто не будет знать,
+                    кто его &laquo;Тайный Санта&raquo; &mdash; даритель подарка.
+                    Все подробности жди в письме.
+                </div>
+                <div class="modal-footer">
+                    <audio id="rules-audio" src="{{ asset('audio/rules.mp3') }}" preload="auto"></audio>
+                    <button type="button" class="btn btn-secondary js-rules-audio">
+                        <span class="fa fa-volume-up js-rules-audio-icon"></span>
+                        <span class="js-rules-audio-text">Прослушать</span>
+                    </button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                        <span class="fa fa-check"></span>
+                        Классно
+                    </button>
+                </div>
             </div>
         </div>
     </div>

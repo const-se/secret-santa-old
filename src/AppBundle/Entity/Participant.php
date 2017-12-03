@@ -3,12 +3,18 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass = "AppBundle\Repository\ParticipantRepository")
  * @ORM\Table(name = "participants")
+ * @DoctrineAssert\UniqueEntity(
+ *     groups = {"registration"},
+ *     fields = {"email"},
+ *     message = "Такой адрес электронной почты уже зарегистрирован"
+ * )
  */
 class Participant
 {

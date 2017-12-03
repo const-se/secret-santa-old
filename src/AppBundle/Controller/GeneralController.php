@@ -6,6 +6,7 @@ use AppBundle\Entity\Participant;
 use AppBundle\Form\Type\Participant\RegistrationType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMInvalidArgumentException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -30,6 +31,7 @@ class GeneralController extends Controller
      * @param SerializerInterface $serializer
      * @return RedirectResponse|Response
      * @throws OptimisticLockException
+     * @throws ORMInvalidArgumentException
      */
     public function registration(Request $request, SerializerInterface $serializer): Response
     {
@@ -41,7 +43,8 @@ class GeneralController extends Controller
         if ($registrationForm->isSubmitted() && $registrationForm->isValid()) {
             /** @var EntityManager $entityManager */
             $entityManager = $this->get('doctrine.orm.default_entity_manager');
-            $entityManager->flush($participant);
+            $entityManager->persist($participant);
+            $entityManager->flush();
 
             // TODO notification
 

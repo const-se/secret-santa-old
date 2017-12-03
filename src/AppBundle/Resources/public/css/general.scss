@@ -22,8 +22,18 @@
   }
 }
 
+.container_welcome {
+  .success-card {
+    max-width: 400px;
+  }
+}
+
 @media (max-width: 575px) {
   .container_index {
+    .new-year-estimate {
+      width: 100%;
+    }
+
     .new-year-h1 {
       font-size: 2.5rem;
     }
@@ -42,6 +52,10 @@
 
 @media (min-width: 576px) {
   .container_index {
+    .new-year-estimate {
+      max-width: 600px;
+    }
+
     .new-year-h1 {
       font-size: 2.5rem;
     }
@@ -60,6 +74,10 @@
 
 @media (min-width: 992px) {
   .container_index {
+    .new-year-estimate {
+      max-width: 800px;
+    }
+
     .new-year-h1 {
       font-size: 4.5rem;
     }
@@ -78,6 +96,10 @@
 
 @media (min-width: 1200px) {
   .container_index {
+    .new-year-estimate {
+      max-width: 1200px;
+    }
+
     .new-year-h1 {
       font-size: 6rem;
     }
