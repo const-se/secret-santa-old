@@ -28,6 +28,12 @@
   }
 }
 
+.container_confirm {
+  .success-card {
+    max-width: 400px;
+  }
+}
+
 @media (max-width: 575px) {
   .container_index {
     .new-year-estimate {

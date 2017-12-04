@@ -10,10 +10,10 @@ angular.module('santa').controller('IndexController', function ($scope, $interva
     $scope.seconds2 = 0;
     $scope.progress = 0;
 
-    var newYearTime = + new Date('2018/01/01 00:00:00');
-    var fromTime = + new Date('2017/12/01 00:00:00');
+    var newYearTime = new Date('2018/01/01 00:00:00').getTime();
+    var fromTime = new Date('2017/12/01 00:00:00').getTime();
     var timer = $interval(function () {
-        var estimate = Math.floor((newYearTime - new Date()) / 1000);
+        var estimate = Math.floor((newYearTime - new Date().getTime()) / 1000);
 
         if (estimate > 0) {
             var days = Math.floor(estimate / 60 / 60 / 24);
@@ -31,7 +31,7 @@ angular.module('santa').controller('IndexController', function ($scope, $interva
             $scope.seconds1 = Math.floor(estimate / 10);
             $scope.seconds2 = estimate % 10;
 
-            var progress = Math.round((new Date() - fromTime) / (newYearTime - fromTime) * 100);
+            var progress = Math.round((new Date().getTime() - fromTime) / (newYearTime - fromTime) * 100);
 
             if (progress > $scope.progress) {
                 $scope.progress = progress;

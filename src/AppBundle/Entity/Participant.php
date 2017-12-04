@@ -21,6 +21,18 @@ class Participant
     use IdentifiedEntityTrait;
 
     /**
+     * @ORM\Column(name = "dative_firstname", type = "string", nullable = true)
+     * @var string|null
+     */
+    protected $dativeFirstname = '';
+
+    /**
+     * @ORM\Column(name = "dative_lastname", type = "string", nullable = true)
+     * @var string|null
+     */
+    protected $dativeLastname = '';
+
+    /**
      * @ORM\Column(name = "email", type = "string", length = 100, unique = true)
      * @Assert\NotBlank(groups = {"registration"}, message = "Адрес электронной почты не может быть пустым")
      * @Assert\Email(groups = {"registration"}, message = "Некорректный адрес электронной почты")
@@ -28,6 +40,13 @@ class Participant
      * @var string
      */
     protected $email = '';
+
+    /**
+     * @ORM\ManyToOne(targetEntity = "Participant")
+     * @ORM\JoinColumn(name = "id_except_participant", referencedColumnName = "id", nullable = true)
+     * @var Participant|null
+     */
+    protected $exceptParticipant;
 
     /**
      * @ORM\Column(name = "firstname", type = "string")
@@ -48,24 +67,59 @@ class Participant
     protected $lastname = '';
 
     /**
+     * @ORM\Column(name = "received", type = "boolean")
+     * @var bool
+     */
+    protected $received;
+
+    /**
      * @ORM\ManyToOne(targetEntity = "Participant")
      * @ORM\JoinColumn(name = "id_recipient", referencedColumnName = "id", nullable = true)
      * @var Participant|null
      */
     protected $recipient;
 
-    /**
-     * @return string
-     */
-    public function getEmail(): string
+    public function __construct()
     {
-        return $this->email;
+        $this->received = false;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDativeFirstname()
+    {
+        return $this->dativeFirstname;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDativeLastname()
+    {
+        return $this->dativeLastname;
     }
 
     /**
      * @return string
      */
-    public function getFirstname(): string
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @return Participant|null
+     */
+    public function getExceptParticipant()
+    {
+        return $this->exceptParticipant;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstname()
     {
         return $this->firstname;
     }
@@ -73,7 +127,7 @@ class Participant
     /**
      * @return string
      */
-    public function getLastname(): string
+    public function getLastname()
     {
         return $this->lastname;
     }
@@ -81,18 +135,59 @@ class Participant
     /**
      * @return Participant|null
      */
-    public function getRecipient(): ?Participant
+    public function getRecipient()
     {
         return $this->recipient;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReceived()
+    {
+        return $this->received;
+    }
+
+    /**
+     * @param string|null $dativeFirstname
+     * @return $this
+     */
+    public function setDativeFirstname(string $dativeFirstname = null)
+    {
+        $this->dativeFirstname = $dativeFirstname;
+
+        return $this;
+    }
+
+    /**
+     * @param string|null $dativeLastname
+     * @return $this
+     */
+    public function setDativeLastname(string $dativeLastname = null)
+    {
+        $this->dativeLastname = $dativeLastname;
+
+        return $this;
     }
 
     /**
      * @param string $email
      * @return Participant
      */
-    public function setEmail(string $email): Participant
+    public function setEmail(string $email)
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @param Participant|null $exceptParticipant
+     * @return Participant
+     */
+    public function setExceptParticipant(Participant $exceptParticipant = null)
+    {
+        $this->exceptParticipant = $exceptParticipant;
 
         return $this;
     }
@@ -101,7 +196,7 @@ class Participant
      * @param string $firstname
      * @return Participant
      */
-    public function setFirstname(string $firstname): Participant
+    public function setFirstname(string $firstname)
     {
         $this->firstname = $firstname;
 
@@ -112,9 +207,20 @@ class Participant
      * @param string $lastname
      * @return Participant
      */
-    public function setLastname(string $lastname): Participant
+    public function setLastname(string $lastname)
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $received
+     * @return $this
+     */
+    public function setReceived(bool $received)
+    {
+        $this->received = $received;
 
         return $this;
     }
@@ -123,7 +229,7 @@ class Participant
      * @param Participant|null $recipient
      * @return Participant|null
      */
-    public function setRecipient(?Participant $recipient): Participant
+    public function setRecipient(Participant $recipient = null)
     {
         $this->recipient = $recipient;
 

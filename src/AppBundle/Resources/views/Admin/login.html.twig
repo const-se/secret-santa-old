@@ -1,0 +1,71 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block title %}Вход в админку{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/app/css/admin.scss' output = 'css/admin.css' filter = 'scssphp, cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid container_login" ng-controller="LoginController">
+        <div class="card mt-xl-5 mt-lg-4 mt-md-3 mt-sm-2 mt-1 mx-auto text-center login-form">
+            <div class="card-body p-xl-5 p-lg-4 p-md-3 p-sm-2 p-1">
+                <h4 class="card-title">Вход в админку</h4>
+                {% form_theme login_form 'EWZRecaptchaBundle:Form:ewz_recaptcha_widget.html.twig' %}
+                {{ form_start(login_form, {'name': 'loginForm', 'action': path('admin_login_check')}) }}
+                    <div class="form-group">
+                        {{ form_label(login_form.username) }}
+                        {% set errors = login_form.username.vars.errors %}
+                        {{ form_widget(login_form.username, {'attr': {'class': 'form-control form-control-lg' ~ (errors|length ? ' is-invalid')}}) }}
+                        <div class="invalid-feedback">
+                            <ul class="text-left">
+                                {% for error in errors %}
+                                    <li>{{ error.message|e }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(login_form.password) }}
+                        {% set errors = login_form.password.vars.errors %}
+                        {{ form_widget(login_form.password, {'attr': {'class': 'form-control form-control-lg' ~ (errors|length ? ' is-invalid')}}) }}
+                        <div class="invalid-feedback">
+                            <ul class="text-left">
+                                {% for error in errors %}
+                                    <li>{{ error.message|e }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_widget(login_form.recaptcha) }}
+                        {% set errors = login_form.recaptcha.vars.errors %}
+                        {% if errors|length %}
+                            <div class="form-text text-danger small">
+                                <ul class="text-left">
+                                    {% for error in errors %}
+                                        <li>{{ error.message|e }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">
+                        <span class="fa fa-sign-in"></span>
+                        Войти
+                    </button>
+                {{ form_end(login_form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts '@AppBundle/Resources/public/js/admin.js' output = 'js/admin.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

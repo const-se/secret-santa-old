@@ -1,6 +1,6 @@
 {% extends 'AppBundle::layout.html.twig' %}
 
-{% block title %}Добро пожаловать!{% endblock %}
+{% block title %}Подтверждено!{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -10,15 +10,13 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container-fluid container_welcome" ng-controller="WelcomeController">
+    <div class="container-fluid container_confirm" ng-controller="ConfirmController">
         <div class="card mt-xl-5 mt-lg-4 mt-md-3 mt-sm-2 mt-1 mx-auto text-center success-card">
             <div class="card-body p-xl-5 p-lg-4 p-md-3 p-sm-2 p-1">
-                <h4 class="card-title">Супер!</h4>
+                <h4 class="card-title">Спасибо, получение письма подтверждено!</h4>
                 <p class="card-text">
-                    Поздравляю, {{ participant.firstname|e }}, теперь ты в игре!
-                    Осталось дождаться письма с подробными инструкциями,
-                    которое будет отправлено на адрес {{ participant.email|e }},
-                    как только зарегистрируются все участники.
+                    Теперь ты знаешь, что делать.
+                    Желаю тебе удачи!
                 </p>
             </div>
             <div class="card-footer">

@@ -2,7 +2,7 @@ security:
     encoders:
         AppBundle\Entity\User: bcrypt
     providers:
-        admin:
+        main:
             entity:
                 class: AppBundle:User
                 property: username
@@ -12,10 +12,7 @@ security:
             security: false
         main:
             pattern: ^/
-            anonymous: ~
-        admin:
-            pattern: ^/admin/
-            provider: admin
+            provider: main
             anonymous: ~
             security: true
             form_login:

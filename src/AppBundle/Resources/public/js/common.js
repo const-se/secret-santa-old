@@ -1,4 +1,4 @@
-var santa = angular
+angular
     .module('santa', [])
     .config(function ($interpolateProvider) {
         $interpolateProvider.startSymbol('[[');

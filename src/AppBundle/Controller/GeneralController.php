@@ -13,10 +13,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class GeneralController extends Controller
 {
+    /**
+     * @Config\Route("/confirm/{participant}", name = "general_confirm", requirements = {"participant": "^\d+$"})
+     * @param Participant $participant
+     * @return Response
+     * @throws OptimisticLockException
+     * @throws ORMInvalidArgumentException
+     */
+    public function confirm(Participant $participant): Response
+    {
+        $participant->setReceived(true);
+        $entityManager = $this->get('doctrine.orm.default_entity_manager');
+        $entityManager->persist($participant);
+        $entityManager->flush();
+
+        return $this->render('AppBundle:General:confirm.html.twig');
+    }
+
     /**
      * @Config\Route("/", name = "general_index")
      * @return Response
@@ -31,11 +49,14 @@ class GeneralController extends Controller
      * @param Request $request
      * @param SerializerInterface $serializer
      * @return RedirectResponse|Response
+     * @throws NotFoundHttpException
      * @throws OptimisticLockException
      * @throws ORMInvalidArgumentException
      */
     public function registration(Request $request, SerializerInterface $serializer): Response
     {
+        throw $this->createNotFoundException();
+
         $participant = new Participant();
         $registrationForm = $this
             ->createForm(RegistrationType::class, $participant)

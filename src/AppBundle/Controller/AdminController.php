@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Participant;
 use AppBundle\Entity\User;
 use AppBundle\Form\Type\User\LoginType;
 use LogicException;
@@ -15,7 +16,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
  * @Config\Route("/admin")
- * @Config\Security("['ROLE_ADMIN']")
+ * @Config\Security("has_role('ROLE_ADMIN')")
  */
 class AdminController extends Controller
 {
@@ -44,7 +45,7 @@ class AdminController extends Controller
         $user = new User();
         /** @var AuthenticationUtils $authUtils */
         $authUtils = $this->get('security.authentication_utils');
-        $user->setUsername($authUtils->getLastUsername());
+        $user->setUsername($authUtils->getLastUsername() ?? '');
         $loginForm = $this->createForm(LoginType::class, $user);
 
         if ($error = $authUtils->getLastAuthenticationError()) {
@@ -71,5 +72,29 @@ class AdminController extends Controller
     public function logout(): void
     {
         throw $this->createNotFoundException();
+    }
+
+    /**
+     * @Config\Route("/test-mail", name = "admin_test_mail")
+     * @return Response
+     */
+    public function testMail(): Response
+    {
+        $participants = $this
+            ->get('doctrine.orm.default_entity_manager')
+            ->getRepository('AppBundle:Participant')
+            ->findAll();
+        /** @var Participant $participant */
+        $participant = $participants[array_rand($participants, 1)];
+
+        do {
+            /** @var Participant $recipient */
+            $recipient = $participants[array_rand($participants, 1)];
+        } while ($recipient->getId() === $participant->getId());
+
+        return $this->render('AppBundle:Mail:secret_santa.html.twig', [
+            'participant' => $participant,
+            'recipient' => $recipient,
+        ]);
     }
 }

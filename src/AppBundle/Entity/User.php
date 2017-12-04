@@ -34,14 +34,14 @@ class User implements UserInterface
     /**
      * @inheritdoc
      */
-    public function eraseCredentials(): void
+    public function eraseCredentials()
     {
     }
 
     /**
      * @inheritdoc
      */
-    public function getPassword(): string
+    public function getPassword()
     {
         return $this->password;
     }
@@ -49,7 +49,7 @@ class User implements UserInterface
     /**
      * @inheritdoc
      */
-    public function getRoles(): array
+    public function getRoles()
     {
         return ['ROLE_ADMIN'];
     }
@@ -57,7 +57,7 @@ class User implements UserInterface
     /**
      * @inheritdoc
      */
-    public function getSalt(): string
+    public function getSalt()
     {
         return $this->salt;
     }
@@ -65,7 +65,7 @@ class User implements UserInterface
     /**
      * @inheritdoc
      */
-    public function getUsername(): string
+    public function getUsername()
     {
         return $this->username;
     }
@@ -74,7 +74,7 @@ class User implements UserInterface
      * @param string $password
      * @return User
      */
-    public function setPassword(string $password): User
+    public function setPassword(string $password)
     {
         $this->password = $password;
 
@@ -85,7 +85,7 @@ class User implements UserInterface
      * @param string $salt
      * @return User
      */
-    public function setSalt(string $salt): User
+    public function setSalt(string $salt)
     {
         $this->salt = $salt;
 
@@ -96,7 +96,7 @@ class User implements UserInterface
      * @param string $username
      * @return User
      */
-    public function setUsername(string $username): User
+    public function setUsername(string $username)
     {
         $this->username = $username;
 
