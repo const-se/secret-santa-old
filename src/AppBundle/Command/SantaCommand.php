@@ -89,9 +89,11 @@ class SantaCommand extends ContainerAwareCommand
             return 1;
         }
 
-        if (!$this->sendMails($participants)) {
+        if (!$this->createMails($participants)) {
             return 1;
         }
+
+        $this->output->writeln('Done!');
 
         return 0;
     }
@@ -145,6 +147,52 @@ class SantaCommand extends ContainerAwareCommand
         }
 
         $this->output->writeln('ok!');
+
+        return true;
+    }
+
+    /**
+     * @param Participant[] $participants
+     * @return bool
+     * @throws LogicException
+     * @throws ServiceCircularReferenceException
+     * @throws ServiceNotFoundException
+     * @throws Twig_Error_Loader
+     * @throws Twig_Error_Runtime
+     * @throws Twig_Error_Syntax
+     */
+    private function createMails(array $participants): bool
+    {
+        /** @var QuestionHelper $helper */
+        $helper = $this->getHelper('question');
+        $question = new ConfirmationQuestion('Сформировать письма? [y/N] ', false);
+
+        if (!$helper->ask($this->input, $this->output, $question)) {
+            return false;
+        }
+
+        $this->output->write('Формирование писем: ');
+
+        foreach ($participants as $participant) {
+            $mail = (new Swift_Message())
+                ->setFrom('santaclaus@santa.const-se.ru')
+                ->setTo($participant->getEmail())
+                ->setSubject('Секретный Санта!')
+                ->setBody(
+                    $this
+                        ->getContainer()
+                        ->get('twig')
+                        ->render('AppBundle:Mail:secret_santa.html.twig', [
+                            'participant' => $participant,
+                            'recipient' => $participant->getRecipient(),
+                        ]),
+                    'text/html'
+                );
+            $this->getContainer()->get('mailer')->send($mail);
+            $this->output->write('.');
+        }
+
+        $this->output->writeln('');
 
         return true;
     }
@@ -206,59 +254,6 @@ class SantaCommand extends ContainerAwareCommand
         }
 
         $this->entityManager->flush();
-    }
-
-    /**
-     * @param Participant[] $participants
-     * @return bool
-     * @throws LogicException
-     * @throws ServiceCircularReferenceException
-     * @throws ServiceNotFoundException
-     * @throws Twig_Error_Loader
-     * @throws Twig_Error_Runtime
-     * @throws Twig_Error_Syntax
-     */
-    private function sendMails(array $participants): bool
-    {
-        /** @var QuestionHelper $helper */
-        $helper = $this->getHelper('question');
-        $question = new ConfirmationQuestion('Отправить письма? [y/N] ', false);
-        $result = $helper->ask($this->input, $this->output, $question);
-
-        if (!$result) {
-            return false;
-        }
-
-        $question = new ConfirmationQuestion('Отправить на тестовый адрес? [y/N] ', false);
-        $test = $helper->ask($this->input, $this->output, $question);
-
-        $this->output->write('Формирование писем: ');
-
-        foreach ($participants as $participant) {
-            $mail = (new Swift_Message())
-                ->setFrom('santaclaus@santa.const-se.ru')
-                ->setTo($test ? 'const.seoff@gmail.com' : $participant->getEmail())
-                ->setSubject('Секретный Санта!')
-                ->setBody(
-                    $this
-                        ->getContainer()
-                        ->get('twig')
-                        ->render('AppBundle:Mail:secret_santa.html.twig', [
-                            'participant' => $participant,
-                            'recipient' => $participant->getRecipient(),
-                        ]),
-                    'text/html'
-                );
-            $this->getContainer()->get('mailer')->send($mail);
-            $this->output->write('.');
-        }
-
-        $this->output->writeln('');
-        $this->output->writeln('Отправка писем');
-        $command = $this->getApplication()->find('swiftmailer:spool:send');
-        $input = new ArrayInput(['--env' => 'prod']);
-
-        return (bool)$command->run($input, $this->output);
     }
 
     /**
