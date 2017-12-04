@@ -4,6 +4,12 @@
   }
 }
 
+.container_index {
+  .success-card {
+    max-width: 400px;
+  }
+}
+
 @media (max-width: 575px) {
   .container_login {
     .login-form {

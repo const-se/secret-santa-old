@@ -1,0 +1,37 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block title %}Админка{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 'bundles/app/css/admin.scss' output = 'css/admin.css' filter = 'scssphp, cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid container_index" ng-controller="IndexController">
+        <div class="card mt-xl-5 mt-lg-4 mt-md-3 mt-sm-2 mt-1 mx-auto text-center success-card">
+            <div class="card-body p-xl-5 p-lg-4 p-md-3 p-sm-2 p-1">
+                <h4 class="card-title">Письмо прочитали</h4>
+                <p class="card-text">
+                    {% for participant in participants if participant.received %}
+                        {{ participant.firstname|e }} {{ participant.lastname|e }}<br/>
+                    {% endfor %}
+                </p>
+            </div>
+            <div class="card-footer">
+                <p class="card-text">
+                    <a href="{{ path('general_index') }}">Ну когда уже Новый год?!</a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts '@AppBundle/Resources/public/js/admin.js' output = 'js/admin.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

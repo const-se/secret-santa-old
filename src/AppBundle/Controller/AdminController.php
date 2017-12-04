@@ -26,7 +26,12 @@ class AdminController extends Controller
      */
     public function index(): Response
     {
-        return $this->render('AppBundle:Admin:index.html.twig');
+        $participants = $this
+            ->get('doctrine.orm.default_entity_manager')
+            ->getRepository('AppBundle:Participant')
+            ->findAll();
+
+        return $this->render('AppBundle:Admin:index.html.twig', ['participants' => $participants]);
     }
 
     /**
